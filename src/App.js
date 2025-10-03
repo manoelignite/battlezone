@@ -1,3 +1,6 @@
+import { database } from './firebase-config'; // importa o Firestore
+import { collection, addDoc } from 'firebase/firestore'; // funções para salvar
+
 import './App.css';
 import './App.css';
 import React, { useState } from 'react';
@@ -8,13 +11,24 @@ function App() {
   const [turma, setTurma] = useState('');
   const [jogadores, setJogadores] = useState([]);
 
-const handleAdicionarJogador = () => {
+  
+
+const handleAdicionarJogador = async () => {
     if (nome.trim() === '' || turma.trim() === '') {
       alert('Preencha todos os campos!');
       return;
     }
 
     const novoJogador = { nome, turma };
+
+    try {
+      // 🔥 Salva no Firestore
+      await addDoc(collection(database, 'jogadores'), novoJogador);
+      console.log('Jogador salvo no Firestore com sucesso.');
+    } catch (error) {
+      console.error('Erro ao salvar no Firestore:', error);
+    }
+
     setJogadores([...jogadores, novoJogador]);
     setNome('');
     setTurma('');

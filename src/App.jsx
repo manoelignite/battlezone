@@ -1,4 +1,4 @@
-import { database } from './firebase-config'; // importa o Firestore
+import { database } from './config/firebase'; // importa o Firestore
 import { collection, addDoc } from 'firebase/firestore'; // funções para salvar
 
 import './App.css';
